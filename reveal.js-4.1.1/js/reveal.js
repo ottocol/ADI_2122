@@ -817,6 +817,11 @@ export default function( revealElement, options ) {
 
 				const oldScale = scale;
 
+				//MODIFICADO por mi para que las imagenes en markdown se escalen correctamente
+				//https://github.com/hakimel/reveal.js/issues/1099
+				//Remove <p> surrounding <img class="stretch">
+				removeParagraphsFromStretchedImages()
+
 				// Layout the contents of the slides
 				layoutSlideContents( config.width, config.height );
 
@@ -2418,6 +2423,13 @@ export default function( revealElement, options ) {
 
 	}
 
+	//MODIFICADO para que los img no queden dentro de un p
+	function removeParagraphsFromStretchedImages() {
+    	Array.prototype.slice.call(dom.slides.querySelectorAll('section > p > .stretch, section > p > .r-stretch')).forEach( 
+    		function( element ) {
+    		  element.parentNode.parentNode.replaceChild(element, element.parentNode)
+		    })
+    }
 
 	// --------------------------------------------------------------------//
 	// ------------------------------- API --------------------------------//
