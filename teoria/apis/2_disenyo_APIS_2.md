@@ -14,7 +14,7 @@
 4. **Colecciones: filtrados, búsquedas y paginación**
 5. Buenas prácticas en el diseño de APIs REST
 6. Buenas prácticas a nivel técnico
-7. Hipermedia
+7. Más allá de REST
 
 ---
 
@@ -325,102 +325,150 @@ https://api.flickr.com/services?format=XML...
 ```
 
 
+
 ---
 
 <!-- .slide: class="titulo" -->
-<!-- .slide: id="sect_hipermedia" -->
 
-# 7. Hipermedia en APIs REST
+# 7. Más allá de REST
 
+![](img_2/everywhere.jpg) <!-- .element: class="r-stretch" -->
 
 
 ---
 
-## Problema: dependencia de las URL
+Aunque REST es el paradigma dominante en APIs web, hay casos en los que probablemente no sea el más apropiado:
 
-*   Tal y como hemos implementado hasta ahora los servicios REST, para realizar una operación necesitamos **conocer previamente la URL** del recurso
-*   Esto presenta el problema de que **no podemos modificar las URL** sin "romper" los clientes actuales
+- APIs orientados a **operaciones**
+- *Streaming* de información, datos en **tiempo real**
+-  Cuando necesitemos **flexibilidad** en los datos que queremos recuperar
+
+---
+
+## APIs orientados a operaciones
+
+- No hay nada malo en que las primitivas básicas de un API sean las operaciones y no los recursos
+- Este tipo de APIs se denominan genéricamente RPC (Remote Procedure Call)
+- Por ejemplo el [API de Flickr](https://www.flickr.com/services/api/) en realidad es RPC (por mucho que la documentación hable de REST y esté agrupado por recursos como `contacts`, `favorites`, `galleries`,... las primitivas son operaciones
 
 ---
 
 
-## HATEOAS
+- En ciertos casos queremos estar al tanto de las **actualizaciones del servidor** (p. ej. un *juego online*, un *chat* ...)
+- Con un API REST el cliente puede hacer ***polling* periódicamente, pero es ineficiente**, es mejor **que el servidor "nos avise"** de que hay nuevos datos
 
-**H**ypermedia **A**s **T**he **E**ngine **O**f **A**pplication **S**tate
+![](https://cdn-images-1.medium.com/max/800/1*zG7Jyeq02JRAN6Wz6gs15g.png) <!-- .element: class="r-stretch" -->
 
-Imitar el funcionamiento de la web, en la que para seguir los pasos en un flujo de trabajo vamos saltando entre enlaces, sin necesidad de conocer previamente las URL
-
-![](img_2/amazon.png)<!-- .element: class="r-stretch" -->
+De [Polling vs SSE vs WebSocket— How to choose the right one](https://codeburst.io/polling-vs-sse-vs-websocket-how-to-choose-the-right-one-1859e4e13bd9)
+<!-- .element class="caption" --> 
 
 ---
 
-## Hipermedia en REST
+## Algunas tecnologías web para tiempo real/eventos
 
-- En cada respuesta debemos incluir enlaces con las **operaciones** posibles y los **recursos** directamente relacionados
-- Aunque en JSON no hay un tipo de datos URL, hay formatos más o menos difundidos para representar vínculos, por ejemplo [HAL](http://stateless.co/hal_specification.html)
+**de Servidor a Cliente(Navegador)**
+
+- **Long polling**: el cliente hace *polling* pero la conexión se mantiene abierta hasta que el servidor envía datos. Entonces hay que hacer *polling* de nuevo
+- **Server Sent Events**: el cliente recibe de forma asíncrona mensajes y eventos del servidor
+- **Websockets**: comunicación bidireccional asíncrona basada en eventos
+- **Notificaciones push**: el navegador recibe notificaciones que muestra automáticamente (las veremos en la parte de móviles)
+
+**de Servidor a Servidor**
+
+- **Webhooks**: se avisa con una petición HTTP cuando hay nuevos datos 
+
+
+---
+
+## Ejemplo de tecnología: Server Sent Events
+
+
+ + **Unidireccionales**, siempre desde el servidor al cliente
+ + Mensajes de **texto**
+ + Funciona sobre **HTTP**
+ + [Amplio soporte](https://caniuse.com/#feat=eventsource) en navegadores actuales (en Edge debe ser una versión reciente)
+
+---
+
+## Ejemplo de código con SSE
+
+Ejemplo completo en [https://glitch.com/edit/#!/peridot-coin](https://glitch.com/edit/#!/peridot-coin)
+<!-- .element  class="caption"--> 
 
 ```javascript
-{
-  "id":"1",
-  "items": [
-    {"id":"12", "cantidad":"1"},
-    {"id":"1123", "cantidad":"2"}
-  ]
-  "_links": {
-    "self": {
-       "href": "http://miapi.com/pedidos/1"  
-    },  
-    "items": {
-      "href": "http://miapi.com/pedidos/1/items"  
-    },
-    "pagar": {
-      "href": "http://miapi.com/pagos/pedidos/1"  
-    }
-  }
-}
+//Servidor
+app.get('/sse', function(pet, resp) {
+  //El servidor de eventos debe usar el tipo MIME text/event-stream
+  resp.header('Content-Type', 'text/event-stream')
+  //Temporizador cada dos segundos
+  setInterval(function() {
+     //nombre del evento
+     resp.write('event: ping\n')
+     //datos del evento (texto, en nuestro caso un JSON)
+     resp.write(`data: {"timestamp":"${new Date()}"}`)
+     //Hay que acabar el mensaje con 2 retornos de carro
+     resp.write('\n\n')
+  }, 2000)
+})
+
+```
+
+```javascript
+//Cliente
+var evtSource = new EventSource("/sse");
+evtSource.addEventListener('ping', function(evento) {
+   var datos = JSON.parse(evento.data)
+   console.log(datos.timestamp)
+})
 ```
 
 ---
 
-La idea de HATEOAS es que al final el API es como una máquina de estados y pasamos de un estado a otro haciendo peticiones
+Facebook ofrece algunos *endpoints* SSE en su "graph API"
 
-![](https://eamodeorubio.files.wordpress.com/2012/09/order_state_machine.png) <!-- .element: class="r-stretch" -->
+[https://developers.facebook.com/docs/graph-api/server-sent-events](https://developers.facebook.com/docs/graph-api/server-sent-events)
+
+![](img_3/sse_facebook.png)
 
 ---
 
-## Paginación
+## Flexibilidad al recuperar información
 
-Es un ejemplo apropiado para hipermedia, ya que es recomendable incluir **vínculos** a los datos de (al menos) la página anterior y siguiente
+Ya vimos que un problema de REST es que **la granularidad de los recursos es fija**
 
-```javascript
-{
-    "_links": {
-        "self": {
-            "href": "http://example.org/api/books?page=3"
-        },
-        "first": {
-            "href": "http://example.org/api/books"
-        },
-        "prev": {
-            "href": "http://example.org/api/books?page=2"
-        },
-        "next": {
-            "href": "http://example.org/api/books?page=4"
-        },
-        "last": {
-            "href": "http://example.org/api/books?page=133"
-        }
-    }
-    "count": 2,
-    "total": 498,
-    "data": {
-        { title: "Canción de hielo y fuego", author: "George R.R. Martin"}
-        { title: "A vuestros cuerpos dispersos", author: "Philip J. Farmer"}
-    }
-}
+```http
+http://miapirest.com/blogs/1/posts/1
 ```
+Queremos ver el post 1 del blog 1<!-- .element class="caption" -->
+
+El diseñador del API puede haber decidido que un post ya incluye los comentarios, o bien que no, pero es una *decisión fija*. Si a veces los necesitamos y otras no, tendremos un problema.   
+
 
 ---
+
+## Posible solución: GraphQL
+
+- **GraphQL** es un lenguaje para hacer consultas flexibles a **APIs orientados a recursos** en los que estos están relacionados entre sí formando un **grafo**
+- Desarrollado en Facebook, la especificación es *open source* (aunque controlada por FB): [https://github.com/facebook/graphql](https://github.com/facebook/graphql)
+- Hay [multitud de implementaciones](http://graphql.org/code/) de cliente y servidor en diferentes lenguajes
+
+![](img_2/graphql_.png) <!-- .element: class="r-stretch" -->
+
+---
+
+<!-- .slide: class="dim" -->
+<!-- .slide: data-background-image="img_2/minions.jpg" -->
+<!-- .slide: style="color: white; text-shadow: 1px 1px 3px black" -->
+## Demo con el API GraphQL de Github
+
+- [GraphQL Explorer](https://developer.github.com/v4/explorer/) (hace falta *estar logueado* en Github, todas las llamadas requieren autenticación)
+
+- [Documentación](https://docs.github.com/en/free-pro-team@latest/graphql)
+
+- [Otros APIs GraphQL de acceso público](https://github.com/apis-guru/graphql-apis)
+
+---
+
 
 ## Referencias
 

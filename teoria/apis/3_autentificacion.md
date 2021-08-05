@@ -3,6 +3,15 @@
 # Tema 1, parte 4
 # Autenticación en APIs REST
 
+
+---
+
+## Seguridad en APIs REST
+
+La seguridad es un tema complejo, aquí vamos a hablar únicamente de **autenticación**
+
+![](img_3/seguridad.png) <!-- .element  class="stretch" -->
+
 ---
 
 ## Contenidos
