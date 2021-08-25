@@ -472,7 +472,11 @@ El diseñador del API puede haber decidido que un post ya incluye los comentario
 
 ## Referencias
 
-- API design patterns, JJ Geewax
+
+**API design patterns, JJ Geewax**. Disponible en la UA a través de O`Reilly: [https://learning.oreilly.com/library/view/api-design-patterns/9781617295850/](https://learning.oreilly.com/library/view/api-design-patterns/9781617295850/) 
+
+
+![](https://learning.oreilly.com/covers/urn:orm:book:9781617295850/400w/) <!-- .element class="stretch" -->
 
 
 ---

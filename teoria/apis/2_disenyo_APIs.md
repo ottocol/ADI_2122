@@ -387,5 +387,15 @@ https://api.spotify.com/v1/albums?ids=111Ab31,2GFg2222,3333Tg7f
 https://api.spotify.com/v1/album/111Ab31
 ```
 
+---
+
+## Referencias
+
+
+**API design patterns, JJ Geewax**. Disponible en la UA a través de O`Reilly: [https://learning.oreilly.com/library/view/api-design-patterns/9781617295850/](https://learning.oreilly.com/library/view/api-design-patterns/9781617295850/) 
+
+
+![](https://learning.oreilly.com/covers/urn:orm:book:9781617295850/400w/) <!-- .element class="stretch" -->
+
 
 
