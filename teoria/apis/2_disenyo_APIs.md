@@ -73,7 +73,7 @@ Nos falta saber "cómo pasar esto a URLs"
 
 ---
 
-## Colecciones
+## Colecciones (varios recursos)
 
 - Representan todos los recursos de un tipo. Por convención, **en plural**
 
@@ -87,7 +87,7 @@ https://api.linkedin.com/v1/people
 
 ---
 
-## Identificadores
+## Identificador (un único recurso)
 
 - Cada recurso individual debe tener un identificador único 
 - Para que sea sencillo saber el tipo, el identificador se precede de la colección a la que pertenece
@@ -98,11 +98,11 @@ https://api.github.com/users/octocat
 
 ---
 
-## Subrecursos
+## Relación jerárquica: subrecursos
 
 
-- En ocasiones un recurso "pertenece" a otro (los repositorios de un usuario, las páginas de un libro)
-- En la URL lo podemos representar al estilo "subdirectorio"
+- Hay relaciones que expresan **pertenencia** (los repositorios de un usuario, los comentarios de un post en un blog) - Si borramos el lado del 1 el lado N no tiene sentido
+- En la URL lo podemos representar al estilo "subdirectorio" (subrecursos)
 
 ```bash
 # Un usuario tiene N repos
@@ -111,28 +111,63 @@ https://api.github.com/users/octocat/repos
 https://api.github.com/repos/octocat/Hello-World/issues
 ```
 
-> Nótese que en el último ejemplo el path técnicamente debería ser `https://api.github.com/users/octocat/repos/Hello-World/issues` pero si tenemos una jerarquía muy profunda y nos empeñamos en trasladarla literalmente a URLs, al final van a ser inmanejables
+> Nótese que en el último ejemplo el *path* debería ser `https://api.github.com/users/octocat/repos/Hello-World/issues` pero si tenemos una jerarquía muy profunda y nos empeñamos en trasladarla literalmente a URLs, al final serán inmanejables
 
+
+---
+
+## Relación de "referencia"
+
+- En ocasiones una relación referencia a otro recurso sin expresar "propiedad"
+- Ejemplo: en un inventario de una empresa los objetos dentro de una sala
+- Mejor que usar URL jerárquicas (`sala/1/objetos/`) para GET/POST/PUT/DELETE  podemos hacer que el JSON del recurso contenga una *"clave ajena"*
+
+```bash
+Petición: POST /objetos
+Cuerpo: {
+  nombre: "proyector 4K",
+  idSala: 1
+}
+```
+
+- nada nos impide seguir usando una URL jerárquica para GET
+
+
+---
+
+## Relación "muchos a muchos"
+
+- Es muy típico crear un recurso "adicional" que expresa la relación (igual que en BD relacionales se usa una *"join table"*)
+- Ejemplo: asignaturas<->alumnos -> matriculaciones
+
+```bash
+Petición: POST /matriculaciones
+Cuerpo: {
+  idMatriculacion: 1291232,
+  idAsignatura: 34039,
+  idAlumno: 666
+}
+```
+- Nada nos impide tener además URLs del tipo `/asignaturas/34039/alumnos` o `alumnos/666/asignaturas` para GET
 
 ---
 
 ## ¡Cuidado! el API no es la Base de datos
 
-- Hemos usado un esquema ER por ser una notación sencilla y que conocemos pero eso **no quiere decir que este sea el esquema de la BD**
+- Hemos usado un esquema ER por ser una notación sencilla y que conocemos y lo mismo con la terminología de BD ("clave ajena", "join table", ...) pero eso **no quiere decir que este sea el esquema de la BD**
 - Los datos del API deben estar estructurados según las **necesidades de los usuarios**, los de la BD según las necesidades internas de la compañía y la tecnología de BD usada
 - En cierto momento se "puso de moda" generar un API REST automáticamente a partir de la BD , pero no es una práctica aconsejable
 
 ---
 
 
-<div class="twitter-tweet"><p lang="en" dir="ltr">&quot;How do you automatically generate a REST API from a database schema?&quot; <br><br>You fucking don&#39;t. That&#39;s how.</p>&mdash; Tree Sturgeon 🔥🚴‍♂️🌳 (@philsturgeon) <a href="https://twitter.com/philsturgeon/status/544965192883261441?ref_src=twsrc%5Etfw">December 16, 2014</a></div> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
+![](img_2/sturgeon_tweet.png) <!-- .element class="stretch" -->
 
 ---
 
 ## APIs estructurados según las necesidades de los usuarios
 
-- Por ejemplo, el API de Github incluye algunos datos sobre el **propietario** cuando accedemos a un **repositorio**, el de Spotify incluye bastantes datos sobre las **pistas** al obtener  un **album**,...
+- Por ejemplo, el API de Github incluye algunos datos sobre el **propietario** cuando accedemos a un **repositorio** ([https://api.github.com/repos/octocat/Hello-World](https://api.github.com/repos/octocat/Hello-World), mirad el campo "owner"), el de Spotify incluye bastantes datos sobre las **pistas** al obtener  un **album**,...
 - Si en Spotify usan una BD relacional dudo que guarden los datos de las pistas dentro de los datos del album
 
 ---
@@ -329,7 +364,7 @@ Como podemos ver, el problema es que **la granularidad de los recursos en REST e
 
 En general, **no hay una solución siempre mejor**. La solución apropiada la determinarán los casos de uso típicos del API
 
-Por ejemplo, el API de Github incluye algunos datos sobre el **propietario** cuando accedemos a un **repositorio**, el de Spotify al acceder a un **album** incluye bastantes datos sobre las **pistas**,...
+Por ejemplo, el API de Github incluye algunos datos sobre el **propietario** cuando accedemos a un **repositorio**, pero sin embargo no lista los repos cuando accedemos a un **usuario** (solo devuelve el número de repos públicos)
 
 Otro ejemplo de que **las peticiones al API no tienen por qué reflejar la estructura de la BD subyacente**
 
@@ -389,8 +424,8 @@ https://api.spotify.com/v1/album/111Ab31
 
 ---
 
-## Referencias
-
+## Referencia complementaria 
+### (para saber más, si os interesa el tema)
 
 **API design patterns, JJ Geewax**. Disponible en la UA a través de O`Reilly: [https://learning.oreilly.com/library/view/api-design-patterns/9781617295850/](https://learning.oreilly.com/library/view/api-design-patterns/9781617295850/) 
 
