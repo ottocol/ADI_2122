@@ -28,7 +28,7 @@ Con "simplificados" queremos decir que basta con formularlos de forma sencilla e
 * Un usuario debe poder hacer login en la aplicación
 ...
 
-> En la fase de implementación que empezará a partir del 5 de octubre *no será necesario que implementéis todos los casos de uso*, así que no os quedéis cortos en este apartado, cuanto más pongáis más os hacéis una idea del potencial y las posibilidades de vuestro API.
+> En la fase de implementación *no será necesario que implementéis todos los casos de uso*, así que no os quedéis cortos en este apartado, cuanto más pongáis más os hacéis una idea del potencial y las posibilidades de vuestro API. El enunciado de la fase de implementación se publicará la semana del 4 al 10 de octubre.
 
 ## 3. Diseño básico del API REST
 
