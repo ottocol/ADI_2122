@@ -5,7 +5,7 @@ El objetivo de la práctica 1 es aprender a diseñar e implementar correctamente
 
 > Importante: por el momento vamos a diseñar **solamente el API**, no el sitio web. Este se desarrollará en la práctica siguiente. Eso quiere decir que por el momento **no tendremos interfaz de usuario**.
  
-En esta fase inicial de la práctica 1 únicamente vamos a hacer el diseño inicial, especificando los recursos, los casos de uso y las llamadas al API.
+En esta fase inicial de la práctica 1 únicamente vamos a hacer el diseño inicial, especificando los recursos, los casos de uso y las llamadas al API. En la siguiente fase desarrollaremos la implementación.
 
 ## 1. Identificación de los recursos
 
@@ -52,7 +52,7 @@ Para cada llamada al API tenéis que especificar:
 
 ## 4. Formato y plazo de entrega
 
-El plazo de entrega de la práctica concluye el **lunes día 4 de octubre a las 23:55**. La entrega se realizará en moodle enviando un único archivo comprimido en .zip o similar. 
+El plazo de entrega de la documentación concluye el **viernes día 8 de octubre a las 23:55**. La entrega se realizará en moodle enviando un único archivo comprimido en .zip o similar. 
 
 Se entregará un archivo con la documentación de casos de uso, de relaciones entre llamadas al API y casos de uso y el diagrama de relaciones entre recursos. Puede ser tan simple como un txt y un png, o un pdf. La extensión de la documentación estará entre 1-3 páginas aproximadamente (puede ser mayor pero no es necesario para la máxima nota).
 
@@ -63,7 +63,7 @@ Recordad que la documentación consta de:
 - Listado de casos de uso.
 - Especificación de llamadas al API usando la plantilla que se describe en el apartado 3.
 
-> **IMPORTANTE:** es bastante probable que cuando estéis implementando la práctica (a partir del 5 de octubre) os deis cuenta de que queréis hacer modificaciones en el diseño inicial: añadir o modificar algún recurso, cambiar sus campos, cambiar algún caso de uso o llamada del API... No hay problema siempre que en la práctica completa entreguéis las modificaciones al diseño con respecto al original que entregáis ahora.
+> **IMPORTANTE:** es bastante probable que cuando estéis implementando la práctica os deis cuenta de que queréis hacer modificaciones en el diseño inicial: añadir o modificar algún recurso, cambiar sus campos, cambiar algún caso de uso o llamada del API... No hay problema siempre que en la práctica completa entreguéis las modificaciones al diseño con respecto al original que entregáis ahora.
 
 La documentación no se puntuará por separado sino que formará parte del baremo de la práctica, con una puntuación máxima de 1.5 puntos.
 
