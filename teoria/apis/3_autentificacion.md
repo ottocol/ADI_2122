@@ -1,6 +1,6 @@
 
 <!-- .slide: class="titulo" -->
-# Tema 1, parte 4
+# Tema 3
 # Autenticación en APIs REST
 
 
@@ -94,10 +94,12 @@ Authorization: Basic cGVwaXRvOjEyMzQ1Ng==
 
 ## HTTP Basic en una *app*. Qué ve el usuario final
 
-1. El usuario introduce *login* y *password* en un formulario, y se hace una llamada al API simplemente para **comprobar que son correctos** (el API debería ofrecer esta operación)
-    - Si son OK, se **almacenan en el navegador** (típicamente con un API muy sencillo de usar llamado *Local Storage*)
-    - Si son incorrectos se muestra error
-2. Como las credenciales están almacenadas en el navegador, con Javascript podemos adjuntarlas en cada petición al API (veremos ejemplos en el tema 2)
+- Cuando accede a una URL protegida en el servidor con HTTP Basic (la configuración depende del servidor) el navegador muestra automáticamente un cuadro de diálogo de login
+
+![](img_3/ventana_login.png)
+
+- En cada sucesiva petición a páginas protegidas **el navegador envía automáticamente login y password** en la cabecera `Authorization`
+
 
 ---
 
@@ -114,14 +116,23 @@ WWW-Authenticate: Basic realm="nombre del realm"
 
 ---
 
-Cuando el navegador recibe un `401` + cabecera `WWW-Authenticate` hace que "salte" el típico cuadro de diálogo de login
+Cuando el navegador recibe un `401` + cabecera `WWW-Authenticate` es cuando hace que "salte" el cuadro de diálogo de login
 
 ![](img_3/ventana_login.png)
 
-Si no queremos que aparezca, habrá que "saltarse" el estándar (*status* distinto de 401 u obviar la cabecera `WWW-Authenticate`)
+Si no queremos que aparezca (formulario personalizado), habrá que "saltarse" el estándar (*status* distinto de 401 u obviar la cabecera `WWW-Authenticate`)
 
 ---
 
+
+## Si queremos un formulario de login personalizado...
+
+1. El usuario introduce *login* y *password* en un formulario, y se hace una llamada al API simplemente para **comprobar que son correctos** (el API debería ofrecer esta operación)
+    - Si son OK, se **almacenan en el navegador** (típicamente con un API muy sencillo de usar llamado *Local Storage*)
+    - Si son incorrectos se muestra error
+2. Como las credenciales están almacenadas en el navegador, con Javascript podemos adjuntarlas en cada petición al API (veremos ejemplos en el tema 2)
+
+---
 
 ## A favor de HTTP Basic
 
@@ -249,8 +260,8 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
 
 1. El usuario introduce su *login* y *password* en un formulario, y se hace una llamada al servidor para **obtener un *token***. Es decir, el API debe implementar esta operación. 
    - Si es OK, el JWT se almacena en el navegador (típicamente en el *local storage*)
-2. **Con cada llamada** "protegida" al API **adjuntamos el *token***
-  - Si el *token* no es correcto o ha expirado, el servidor devolverá `401`. En caso de expiración, si teníamos almacenado *login/password* la *app* puede pedir un nuevo JWT de manera transparente al usuario
+2. **Con cada llamada** "protegida" al API **se adjunta automáticamente el *token*** (con Javascript en el navegador, no lo hace el usuario)
+  - Si el *token* no es correcto o ha expirado, el servidor devolverá `401`. En caso de expiración, si teníamos almacenado *login/password* la *app* podría pedir un nuevo JWT  por el usuario de manera transparente
 
 
 ---
@@ -262,6 +273,8 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
 
 
 La solución más común es almacenar el JWT en *cookies* de tipo `httpOnly`, que no se pueden leer desde JS pero se envían automáticamente al servidor con cada petición como todas las *cookies*
+
+**esto es un problema del lado del cliente, no del servidor**
 
 ---
 

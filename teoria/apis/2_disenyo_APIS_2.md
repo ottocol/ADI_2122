@@ -197,7 +197,7 @@ Existen varios lenguajes especialmente creados para **especificar APIs REST** qu
     </div>
     <div class="column third">
       <img src="img_2/swagger.png"> 
-      <a href="https://swagger.io/" class="caption">Swagger</a>
+      <a href="https://swagger.io/" class="caption">OpenAPI/Swagger</a>
     </div>
     <div class="column third">
       <img src="img_2/raml.png">   

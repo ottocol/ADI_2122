@@ -49,7 +49,7 @@ Tiene su origen en [la tesis](www.ics.uci.edu/~fielding/pubs/dissertation/top.ht
 
 <!-- .slide: class="titulo" -->
 
-## 1. Recursos y relaciones entre ellos 
+## 1. Recursos y relaciones entre ellos
 
 ---
 
@@ -355,7 +355,7 @@ Problema: si en algún caso no los necesitamos, malgastamos ancho de banda.
 
 ---
 
-## Granularidad de los recursos en REST 
+## Granularidad de los recursos en REST
 
 Como podemos ver, el problema es que **la granularidad de los recursos en REST es fija**, no hay ningún mecanismo de *query* para poder decir qué datos de un recurso o qué subrecursos queremos y cuáles no
 
@@ -364,7 +364,7 @@ Como podemos ver, el problema es que **la granularidad de los recursos en REST e
 
 En general, **no hay una solución siempre mejor**. La solución apropiada la determinarán los casos de uso típicos del API
 
-Por ejemplo, el API de Github incluye algunos datos sobre el **propietario** cuando accedemos a un **repositorio**, pero sin embargo no lista los repos cuando accedemos a un **usuario** (solo devuelve el número de repos públicos)
+Por ejemplo, el API de Github incluye algunos datos sobre el **propietario** [cuando accedemos a un **repositorio**](https://api.github.com/repos/ottocol/ADI_2122), pero sin embargo no lista los repos cuando accedemos a un **usuario** (solo devuelve el número de repos públicos)
 
 Otro ejemplo de que **las peticiones al API no tienen por qué reflejar la estructura de la BD subyacente**
 
