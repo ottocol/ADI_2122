@@ -35,7 +35,7 @@ De este modo las peticiones de tipo GET siempre devolverán los mismos datos fij
 
 Para poder puntuar estos requisitos es necesario haber implementado correctamente los requisitos mínimos. De este apartado podéis elegir los requerimientos que deseéis.
 
-**(1.5 puntos)** Implementar la persistencia del API con base de datos. Podéis usar para ello tanto el motor de base de datos como las librerías Node que queráis. En caso de implementar este apartado no es necesario guardar además los datos en memoria. En el código JS se deben separar aparte las funcionalidades de persistencia, es decir en una función de *routing* de express no debería aparecer código de base de datos, sino estar en funciones o clases aparte. Así, al examinar el código express no deberíamos poder decir qué base de datos estamos usando, ni tampoco las funciones de BD deberían contener referencias a express. 
+**(1.5 puntos)** Implementar la persistencia del API con base de datos. Podéis usar para ello tanto el motor de base de datos como las librerías Node que queráis. En caso de implementar este apartado no es necesario guardar además los datos en memoria. 
 
 **(1 punto)** *Testing* automatizado (NO manual) de todas las llamadas al API. Podéis usar las herramientas que deseéis, por ejemplo con [Postman](https://www.getpostman.com/) se pueden [hacer *scripts* para *tests*](https://www.getpostman.com/docs/v6/postman/scripts/test_scripts) con un código JS muy sencillo. La documentación original está en inglés pero también tenéis algún que otro [tutorial](https://medium.com/@cesiztel/c%C3%B3mo-se-hace-api-testing-con-postman-978a521552f4) en castellano.
 
