@@ -349,7 +349,7 @@ Aunque REST es el paradigma dominante en APIs web, hay casos en los que probable
 
 - No hay nada malo en que las primitivas básicas de un API sean las operaciones y no los recursos
 - Este tipo de APIs se denominan genéricamente RPC (Remote Procedure Call)
-- Por ejemplo el [API de Flickr](https://www.flickr.com/services/api/) en realidad es RPC (por mucho que la documentación hable de REST y esté agrupado por recursos como `contacts`, `favorites`, `galleries`,... las primitivas son operaciones
+- Por ejemplo el [API de Flickr](https://www.flickr.com/services/api/)  es RPC: aunque antes la documentación hablaba de REST y está agrupado por recursos como `contacts`, `favorites`, `galleries`,... las primitivas son operaciones
 
 ---
 

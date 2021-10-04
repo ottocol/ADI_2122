@@ -241,7 +241,7 @@ try {
 }
 ```
 
-<div class="caption">[https://runkit.com/ottocol/ejemplo-jwt](https://runkit.com/ottocol/ejemplo-jwt/2.0.0)</div>
+[https://runkit.com/ottocol/ejemplo-jwt](https://runkit.com/ottocol/ejemplo-jwt/2.0.0) <!-- .element class="caption"  -->
 
 ---
 
