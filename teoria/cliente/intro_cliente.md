@@ -1,6 +1,6 @@
 <!-- .slide: class="titulo" -->
 
-# Tema 4: Desarrollo en el cliente con Javascript estándar: introducción, eventos y API del DOM 
+# Tema 4: Desarrollo en el cliente con Javascript estándar: introducción, eventos y API del DOM
 
 
 ---
@@ -15,23 +15,24 @@
 ## Versiones de JS en el navegador
 
 
-- Los navegadores actuales implementan [**en su totalidad**](http://kangax.github.io/compat-table/es6/) la versión 6 de JS (también llamada **ES6**, o ES2015)
-- No obstante los nuevos estándares (ES2016, ES2017, ...) siempre "van más rápido" que las implementaciones
+- La última gran "revolución" en JS fue ES2015, a.k.a. ES6
+- Cada año hay un nuevo estándar: ES2020, ES2021
+- Importa el soporte de funcionalidades más que de versiones
 
 
 ---
 
 ## Transpilación
 
-- Como solución, se pueden usar compiladores ([*transpiladores*](https://en.wikipedia.org/wiki/Source-to-source_compiler)) que **traduzcan de las versiones nuevas de Javascript a, por ejemplo, ES5**  (sí soportado al 100% nativamente). 
+- Si el navegador objetivo no soporta las funcionalidades que necesitamos se pueden usar compiladores ([*transpiladores*](https://en.wikipedia.org/wiki/Source-to-source_compiler)) que **traduzcan de las versiones nuevas de Javascript a código más antiguo** 
 - El transpilador más usado actualmente es [**Babel**](https://babeljs.io/)
-- Para el caso ES6->ES5 cada vez es más superfluo usar un transpilador, por haber un soporte nativo amplio de ES6, pero se sigue usando para dar soporte a navegadores *legacy* y para poder emplear funcionalidades >ES6 
+- Para el caso ES6->ES5 cada vez es más superfluo usar un transpilador, por haber un soporte nativo amplio de ES6, pero se sigue usando para dar soporte a navegadores *legacy* y para poder emplear funcionalidades recientes 
 
 ---
 
 ![](images_intro/sebmck.png)
 
-Como curiosidad: Babel lo empezó a escribir Sebastian McKenzie a los 17 años mientras estaba en el instituto (ahora trabaja en Facebook). El propio Sebastian cuenta [la historia de esta época](https://medium.com/@sebmck/2015-in-review-51ac7035e272#.1vfchy3bc) 
+Como curiosidad: Babel lo empezó a escribir Sebastian McKenzie a los 17 años mientras estaba en el instituto. El propio Sebastian cuenta [la historia de esta época](https://medium.com/@sebmck/2015-in-review-51ac7035e272#.1vfchy3bc) 
 
 ---
 
@@ -96,17 +97,6 @@ Con *scripts* externos podemos usar los atributos `defer` o `async`
 
 ![](images_intro/async_vs_defer.png)
 
----
-
-## Acceso a los APIs nativos del navegador
-
-- Como iremos viendo, el navegador incluye "de serie" multitud de APIs, para: comunicar con el servidor, manipular el HTML, guardar datos en local, dibujar gráficos,...
-- Hay una serie de "objetos globales predefinidos" de los que "cuelgan" estos APIs, por ejemplo
-  + `window`: el objeto global por defecto, todo lo que definimos está dentro de él.
-  + `document`: la página actual
-  + `navigator`: el navegador
-
-
 
 ---
 
@@ -151,10 +141,10 @@ HTML:
 
 ---
 
-## Un problema de los módulos ES6 
+## Un problema de los módulos ES6
 
 - Aunque a fecha de hoy la mayoría de navegadores [los implementan](https://caniuse.com/#search=modules), esto es relativamente reciente.
-- Antes de esto, a alguien se le ocurrió la idea de añadir soporte para CommonJS al navegador mediante una herramienta llamada *bundler*
+- Antes de ES6, a alguien se le ocurrió que se podía añadir soporte de CommonJS al navegador con una herramienta externa que "transformara" el módulo en algo que se pueda incluir con un `script src=""` (*bundler*)
 - Como resultado, desde hace unos años **muchas dependencias de terceros se distribuyen** con `npm`, **en** formato **CommonJS** (no soportado nativamente por los navegadores). Es decir, podemos [usar módulos ES6 para nuestro propio código](https://salomvary.com/es6-modules-in-browsers.html) pero es difícil usarlos con librerías de terceros (Angular, React, ...)
 
 
@@ -181,11 +171,32 @@ HTML:
 
 ---
 
+## ¿Siguen siendo necesarios los *bundlers* en el 2021?
+
+- Probablemente no, hay herramientas alternativas para trabajar con ES6: [Snowpack](https://www.snowpack.dev/), [Vite](https://vitejs.dev/)
+- Pero...
+    + En producción es más eficiente descargar un solo *bundle* que muchos módulos separados
+    + Además del *bundle* realizan otras muchas tareas
+
+---
 
 <!-- .slide: class="titulo" -->
 
 ## 4.2 
 ## Eventos
+
+
+---
+
+## Previo: acceso a los APIs nativos del navegador
+
+- El navegador incluye "de serie" multitud de APIs, para: gestión de eventos, manipulación del HTML, comunicación con el servidor, guardar datos en local, dibujar gráficos,...
+- Hay una serie de "objetos globales predefinidos" de los que "cuelgan" estos APIs, por ejemplo
+  + `window`: el objeto global por defecto, todo lo que definimos está dentro de él.
+  + `document`: la página actual
+  + `navigator`: el navegador
+
+
 
 
 ---
@@ -377,7 +388,7 @@ var noticias = document.getElementById("noticias")
 //Ejemplo: reducir el tamaño de todas las imágenes a la mitad
 //getElementsByTagName devuelve un array
 var imags = document.getElementsByTagName("img"); 
-for(var i=0; i&lt;imags.length; i++){
+for(var i=0; i<imags.length; i++){
       //por cada atributo HTML hay una propiedad JS equivalente
       imags[i].width /= 2;
       imags[i].height /= 2;
@@ -480,7 +491,7 @@ Nótese que el `+=` de este ejemplo es ineficiente, ya que estamos *reevaluando*
 
 ---
 
-## Insertar directamente HTML 
+## Insertar directamente HTML
 
 `insertAdjacentHTML(posicion, cadena_HTML)`: método llamado por un nodo, inserta HTML en una posición relativa a él.  `posicion` es una cte. con posibles valores  `"beforebegin"`, `"afterbegin"`, `"beforeend"`, `"afterend"` 
 
@@ -503,8 +514,8 @@ document.getElementById("boton").addEventListener('click', function() {
 
 La mayoría de *frameworks Javascript* nos liberan de la necesidad de modificar el DOM directamente
 
-- En algunos podemos **vincular**  elementos HTML con partes del modelo, de manera que se **actualicen automáticamente** (*binding*). Ejemplos: Knockout, Angular, Vue,...
-- En otros simplemente **repintamos el HTML entero** y el *framework* se encarga de modificar solo las partes que cambian. Por ejemplo React
+- En algunos podemos **vincular**  elementos HTML con partes del modelo, de manera que se **actualicen automáticamente** (*binding*). Ejemplos: Knockout, Angular, Svelte...
+- En otros simplemente **repintamos el HTML entero** y el *framework* se encarga de modificar solo las partes que cambian. Por ejemplo React, Vue,...
 
 Lo veremos con detalle en el tema siguiente, de momento un ejemplo sencillo...
 
