@@ -334,7 +334,7 @@ La forma más antigua de definir *handlers*: en el propio HTML, con un atributo 
 <!-- nótese que decimos que hay que INVOCAR la función, y no la
   referenciamos simplemente como hasta ahora. Esto es porque aquí 
   podemos poner código arbitrario. Pero un listener debía ser una función -->
-<button onclick=mensaje()>¡No me pulses!</button>
+<button onclick="mensaje()">¡No me pulses!</button>
 ```
 
 ```javascript
