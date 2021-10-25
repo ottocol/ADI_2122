@@ -1,6 +1,6 @@
 <!-- .slide: class="titulo" -->
 
-# Tema 4: Desarrollo en el cliente con Javascript estándar 
+# Tema 4: Javascript estándar en el cliente
 ## Parte 3: El *event loop* en Javascript
 
 ---

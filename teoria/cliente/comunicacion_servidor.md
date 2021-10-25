@@ -1,6 +1,6 @@
 <!-- .slide: class="titulo" -->
 
-## Tema 2: Desarrollo en el cliente con Javascript estándar 
+## Tema 4: Javascript estándar en el cliente
 ## Parte 2: Modelo del dominio. Comunicación con el servidor. Persistencia
 
 ---
