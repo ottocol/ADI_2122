@@ -120,7 +120,9 @@ Buenas intros al API:
 ## Peticiones más complejas con `fetch`
 
 Por defecto se hace una petición `GET`. Para cambiar el tipo de petición, añadir cabeceras, cuerpo de petición, etc, podemos pasar un segundo parámetro que es un objeto JS con las propiedades:
-[https://jsbin.com/fidepejazu/edit?html,js,console](https://jsbin.com/pelene/edit?js,console)<!-- .element: class="caption" -->
+
+[https://jsbin.com/fidepejazu/edit?html,js,console](https://jsbin.com/fidepejazu/edit?html,js,console)<!-- .element: class="caption" -->
+
 ```javascript
 //reqres.in es un API REST "fake" al que podemos hacer peticiones
 var usuario;
