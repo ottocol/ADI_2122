@@ -25,6 +25,8 @@ setTimeout(function() {
 
 ## WAT?
 
+[https://jsbin.com/bibifan/edit?js,console](https://jsbin.com/bibifan/edit?js,console)<!-- .element class="caption" -->
+
 ```javascript
 setTimeout(function(){
   console.log("Esto debería aparecer primero");
@@ -32,7 +34,10 @@ setTimeout(function(){
 for(i=1;i<=1000;i++)
   console.log("Sorpresa!");
 ```
-[https://jsbin.com/bibifan/edit?js,console](https://jsbin.com/bibifan/edit?js,console)
+
+
+El [WAT](https://www.destroyallsoftware.com/talks/wat) original
+
 
 ---
 
@@ -63,7 +68,7 @@ Los motores JS como V8 (Node, Chrome,...)/Spidermonkey(Firefox) implementan lo "
 
 ---
 
-1. Nuestro código llama a un API externo/del navegador asíncrono que se ejecuta "fuera de nuestro código". Le pasamos un *callback* 
+1. Nuestro código llama a un API asíncrono externo o del navegador, que se ejecuta "fuera de nuestro código". Le pasamos un *callback* 
 2. Al terminar la operación, hay que llamar al *callback*, esta tarea se coloca en una *cola de mensajes/eventos/tareas pendientes*
 3. Cuando termina la tarea actual (el *call stack* está vacío), pasamos a la siguiente de la cola.
 
@@ -83,7 +88,8 @@ setTimeout(function(){
 }, 0);
 console.log("Sorpresa!");
 ```
-[Loupe, una herramienta para visualizar el *event loop*](http://latentflip.com/loupe/?code=c2V0VGltZW91dChmdW5jdGlvbiB0aW1lcigpewogIGNvbnNvbGUubG9nKCJFc3RvIGRlYmVy7WEgYXBhcmVjZXIgcHJpbWVybyIpOwp9LCAwKTsKY29uc29sZS5sb2coIlNvcnByZXNhISIpOw%3D%3D!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D)
+
+[JS Visualizer 9000](https://www.jsv9000.app/), una herramienta para visualizar el *event loop* ([este ejemplo](https://www.jsv9000.app/?code=c2V0VGltZW91dChmdW5jdGlvbigpewogIGNvbnNvbGUubG9nKCJFc3RvIGRlYmVy7WEgYXBhcmVjZXIgcHJpbWVybyIpOwp9LCAwKTsKY29uc29sZS5sb2coIlNvcnByZXNhISIpOw%3D%3D))
 
 ---
 
@@ -148,6 +154,7 @@ while (true) {
 }
 ```
 
+
 ---
 
 el *event loop* es la razón por lo que código como este, que intenta hacer una "animación" en la que el texto va aumentando de tamaño progresivamente no funcionará
@@ -211,7 +218,7 @@ var tam = 1
 function anim_frame() {
    if (tam<150) {
       tam = tam + 1
-      titulo.style.fontSize = parseInt(tam) + 'px'
+      titulo.style.fontSize = tam + 'px'
       requestAnimationFrame(anim_frame)
    }
 }
