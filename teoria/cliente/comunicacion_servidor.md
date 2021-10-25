@@ -5,7 +5,7 @@
 
 ---
 
-# Indice 
+# Indice
 
 1. Introducción. Modelo del dominio
 2. Persistencia remota en el servidor
@@ -120,27 +120,21 @@ Buenas intros al API:
 ## Peticiones más complejas con `fetch`
 
 Por defecto se hace una petición `GET`. Para cambiar el tipo de petición, añadir cabeceras, cuerpo de petición, etc, podemos pasar un segundo parámetro que es un objeto JS con las propiedades:
-[https://jsbin.com/pelene/edit?html,js,console](https://jsbin.com/pelene/edit?js,console)<!-- .element: class="caption" -->
+[https://jsbin.com/fidepejazu/edit?html,js,console](https://jsbin.com/pelene/edit?js,console)<!-- .element: class="caption" -->
 ```javascript
 //reqres.in es un API REST "fake" al que podemos hacer peticiones
 var usuario;
 usuario.login = "Pepe"
 usuario.nombre = "Pepe Pérez"
-fetch('http://reqres.in/api/users', {
-  method: 'POST',
-  //decimos que estamos enviando JSON
-  headers: {
-   'Content-type':'application/json'
-  },
-  //El JSON se debe enviar en forma de cadena
-  //Para convertir un objeto a cadena JSON: JSON.stringify(objeto)
-  body: JSON.stringify(usuario)
-}).then(function(respuesta){
-     return respuesta.json();
-}).then(function(resultado){
-     //el API nos devuelve un JSON y en su campo 'id' está el id del objeto creado
-     alert("el nuevo id es: " + resultado.id)
+var respuesta = await fetch('https://reqres.in/api/users', {
+    method: 'POST',
+    headers: {
+      'Content-type':'application/json'
+    },
+    body: '{"login":"Pepe", "nombre":"Pepe Pérez"}'
 })
+var datos = await respuesta.json();
+console.log(datos)
 ```
 
 ---
@@ -213,7 +207,7 @@ Por ejemplo, el Javascript de una página de `www.vuestrositio.com` en principio
 
 ---
 
-## CORS 
+## CORS
 
 *(Cross Origin Resource Sharing)* : permite saltarse la *same origin policy* con la colaboración del servidor
 

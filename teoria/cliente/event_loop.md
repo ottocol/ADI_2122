@@ -1,6 +1,6 @@
 <!-- .slide: class="titulo" -->
 
-# Tema 2: Desarrollo en el cliente con Javascript estándar 
+# Tema 4: Desarrollo en el cliente con Javascript estándar 
 ## Parte 3: El *event loop* en Javascript
 
 ---
@@ -225,5 +225,5 @@ anim_frame()
 
 - 📖 [Javascript Asíncrono: La guía definitiva](https://lemoncode.net/lemoncode-blog/2018/1/29/javascript-asincrono)
 - 📖 [Javascript.info: The event loop](https://javascript.info/event-loop#event-loop)
-- 🎥 [What the heck is the event loop anyway? / Philip Roberts / JSConf EU 2014](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
-- 🎥 [Further Adventures of the Event Loop / Erin Zimmer / JSConf EU 2018](https://www.youtube.com/watch?v=u1kqx6AenYw)
+- 📺 [What the heck is the event loop anyway? / Philip Roberts / JSConf EU 2014](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+- 📺 [Further Adventures of the Event Loop / Erin Zimmer / JSConf EU 2018](https://www.youtube.com/watch?v=u1kqx6AenYw)
