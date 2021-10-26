@@ -61,6 +61,12 @@ Necesitamos sincronizar los modelos guardados en el navegador con el servidor, e
 - Cuando el usuario rellena un formulario en el navegador para dar de alta un  nuevo `Libro` tendremos que lanzar una petición POST para crearlo también en el servidor
 - Para obtener un listado de libros, hay que hacer una petición GET y transformar el JSON a un array de objetos JS
 
+---
+
+![](images_logica/AJAX_vs_NO.png) <!-- .element: class="stretch" -->
+
+
+[Geek & Poke, sin AJAX vs. con AJAX](http://geekandpoke.typepad.com/geekandpoke/2012/01/simply-explained.html) <!-- .element: class="caption" --> 
 
 ---
 
@@ -75,6 +81,7 @@ Es una combinación de tecnologías:
 - **API DOM**: actualizar **solo parte de la página** con los datos del servivor
 
 ---
+
 
 ## Formato de datos en AJAX
 
