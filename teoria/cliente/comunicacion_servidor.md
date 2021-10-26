@@ -312,7 +312,7 @@ function mostrarNombre() {
 }
 function mostrarTodosLosDatos() {
   datos=""
-  for(var i=0; i&lt;localStorage.length; i++) {
+  for(var i=0; i<localStorage.length; i++) {
      clave = localStorage.key(i)
      datos = datos + clave + "=" + localStorage[clave] + '\n'   
   }
