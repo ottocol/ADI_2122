@@ -75,15 +75,15 @@ npm run devel
 
 Esto abrirá un servidor web de desarrollo por el puerto 1234. Parcel incorpora *Hot Module Reloading*, lo que quiere decir (entre otras cosas) que si cambiamos cualquier módulo el efecto se verá inmediatamente sin necesidad de recargar la página.
 
-Parcel aplica automáticamente Babel para transpilar el código a versiones compatibles con navegadores antiguos. Para evitar que haga esto podemos decirle que tome como *target* solo navegadores modernos. Esto podemos conseguirlo añadiendo este campo al `package.json`:
+En versiones anteriores a la 2 Parcel aplicaba automáticamente Babel para transpilar el código a versiones compatibles con navegadores antiguos. Si queremos soportar explícitamente navegadores antiguos que pueden requerir la transpilación podemos añadir el campo `browserslist` al `package.json`:
 
 ```javascript
 "browserslist": [
-    ">5%"
+    ">1%, ie 11"
 ]
 ```
 
-Con esto le decimos a Parcel que solo considere como objetivo los navegadores con un *market share*>5%, con lo que básicamente nos "quitamos de enmedio" navegadores antiguos y en general, la necesidad de usar Babel para funcionalidades ampliamente soportadas de manera nativa.
+Con esto le decimos a Parcel que considere como objetivo los navegadores con un *market share*>1% y también Internet Explorer 11.
 
 > Hay otras formas de especificar los navegadores que usaremos como *target*, podemos indicar navegadores concretos, o decir que nos interesan las n últimas versiones, etc. Tenemos más información en el [proyecto Browserslist](https://github.com/browserslist/browserslist) que es en realidad independiente de Parcel
 
