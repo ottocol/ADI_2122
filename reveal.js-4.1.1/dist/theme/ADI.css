@@ -353,5 +353,11 @@ img.right_vertical_center {
   clear: both;
 }
 
+/* grid básico */
+
+.wrapper.texto_figura {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 
 
