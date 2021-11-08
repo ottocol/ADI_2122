@@ -43,9 +43,9 @@ Principios de diseño importantes:
 
 >  Almacenar el **estado** en el componente de **nivel superior**
 
-Beneficio: si un componente no tiene estado podemos considerar la vista como una **función pura de sus `props`**.
+Beneficio: si un componente no tiene estado podemos considerar la vista como una **función pura de sus `props`**. ([ejemplo](https://jsbin.com/hidokec/5/edit?html,js,output))
 
-Simplifica el *testing* y el razonamiento sobre el componente
+Simplifica el *testing* y el razonamiento sobre el componente 
 
 ---
 
@@ -165,7 +165,7 @@ var store = {
   }
 }
 ```
-[Ejemplo completo](https://jsbin.com/hidokec/edit?html,js,console,output)
+[Ejemplo completo](https://jsbin.com/hidokec/2/edit?html,js,console,output)
 </div>
 
 <div>
