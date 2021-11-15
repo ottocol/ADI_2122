@@ -13,8 +13,10 @@
 
 Aunque **reactividad** es un término bastante amplio que tiene distintos significados en distintos contextos, en el contexto de los *frameworks* JS se suele entender como:
 
-- **cambiar automáticamente el valor de una variable** cuando esta depende de otra
-- **repintar la vista automáticamente cuando cambia el estado** del componente 
+1. **cambiar automáticamente el valor de una variable** cuando esta depende de otra
+2. **repintar la vista automáticamente cuando cambia el estado** del componente 
+
+En general todos los *frameworks* JS son reactivos en el sentido (2), en el (1) solo algunos como Vue o Svelte
 
 ---
 
@@ -64,8 +66,6 @@ var setState = function(newState) {
   state = newState
   update()
 }
-
-
 ```
 
 ---
@@ -86,65 +86,12 @@ console.log(total)  //sigue siendo 5 😕
 sin embargo ya sabéis que Vue sí que lo es: [Ejemplo en JSBin](https://jsbin.com/nakomet/edit?html,js,output). Incluso podemos eliminar la parte de UI, y lo sigue siendo: [Ejemplo en JSBin](https://jsbin.com/nayojel/edit?html,js,output)
 
 
----
 
 ## Cómo funciona la reactividad en Vue 3
 
-Cuando una operación es **reactiva**, queremos no solo ejecutarla, sino también guardarla para cuando cambien las dependencias ejecutarla de nuevo
 
-```javascript
-var a1 = 2
-var a2 = 3
-var total = 0
-//"empaquetamos" la operación en una función para poder guardarla
-const effect = function() {
-  total = a1 + a2
-}
-//lo guardamos, suponemos que esto lo hace la función "track"
-track(effect)
-//ejecutamos la operación
-effect()
-...
-//cuando cambien las dependencias, volvemos a ejecutar todos los "effects"
-trigger()
-```
-
-(Los nombres `track`, `effect` y `trigger` son los que [usa Vue](https://v3.vuejs.org/guide/reactivity.html) internamente para estos conceptos)
-
-
----
-
-## Ejemplo "de juguete"
-
-
-```javascript
-var a1 = 2
-var a2 = 3
-var total = 0
-var effect = function() { return total = a1 + a2}
-//guardaremos los effects en un Set de JS
-var dep = new Set()
-function track(un_effect) { dep.add(un_effect)}
-function trigger() { dep.forEach(effect=>effect())}
-
-//guardamos el effect
-track(effect)
-//lo ejecutamos
-effect()
-
-```
-
-[Código en JSBin](https://jsbin.com/pirirup/edit?js,console)
-
-de momento tanto el guardado de los effect como el trigger hay que ejecutarlos manualmente...en un poco veremos cómo resolverlo
-
-
----
-
-## Escalando el ejemplo "de juguete"
-
-
-En un caso real no tendremos variables simples, sino múltiples objetos reactivos, cada uno con múltiples propiedades reactivas para las que querremos almacenar los efectos
+- Cada "operación reactiva" se encapsula en una función
+- Vue lleva la pista de todas las dependencias
 
 ![](imag_3/deps.png) <!-- .element class="stretch" -->
 
@@ -153,48 +100,35 @@ En un caso real no tendremos variables simples, sino múltiples objetos reactivo
 
 ---
 
-## Falta automatizar la reactividad
-
-```javascript
-var datos = {a1:2, a2:3}
-var total = 0
-var effect = function() { return total = datos.a1 + datos.a2}
-```
-
-- Si al ejecutar un effect accedemos a una propiedad (*getter*) tendremos que hacer `track()` sobre ella
-- Si una propiedad se cambia (*setter*) tendremos que ejecutar los efectos asociados (`trigger`)
+## Cómo funciona la reactividad en Vue 3 (II)
 
 
-Nos falta saber cómo **interceptar** los *getters* y *setters* de un objeto reactivo para además de ejecutar la operación original (get/set) ejecutar el `track/trigger`
+En las "operaciones reactivas"
 
----
-
-## Proxies en JS
-
-
-A partir de la versión ES6 me permiten "envolver" un objeto en otro e interceptar las llamadas al original
-
+- Se intercepta el *get* sobre las propiedades para guardar la operación asociada
+- Se intercepta el *set* sobre una propiedad para recalcular las operaciones asociadas
+)
 
 ```javascript
 var datos = {a1:2, a2:3}
 
+//Un proxy en ES6 "envuelve" a un objeto permitiendo añadirle funcionalidad
 var datosProxy = new Proxy(datos, {
   get (target,key) {
-    //aquí hago esto, pero en Vue estaría llamando a "track"
+    //aquí hago esto, pero en Vue estaría guardando la operación
     console.log('Estoy llamando al get')
     return target[key]
   }
 })
 ```
 
-- Igualmente se pueden interceptar los *setters*
-- Más detalles: Reactivity in Vue 3: How does it work? [video1](https://www.youtube.com/watch?v=NZfNS4sJ8CI) [video2](https://www.vuemastery.com/courses/vue-3-reactivity/proxy-and-reflect/) (para ver el vídeo 2 tenéis que registraros en el sitio web del curso de Vue) 
-
 ---
 
 ## Otro ejemplo: Svelte 3
 
-Svelte sigue un enfoque distinto, en lugar de hacer "la magia" en *runtime*, es un **compilador** que genera "código reactivo"
+
+- Svelte es un framework similar a Vue, algo más ligero
+- Internamente sigue un enfoque distinto, en lugar de hacer "la magia" en *runtime*, es un **compilador** que genera "código reactivo"
 
 [Ejemplo online](https://svelte.dev/repl/a17ccc68af7d44948dee4b68256766dc?version=3.44.1)
 
@@ -218,7 +152,7 @@ Aunque podríamos hacer muchas más diferencias hay *frameworks* que usan un len
 
 ---
 
-## Lenguajes de templates
+## Opción 1: lenguajes de templates
 
 - Problema: nos vemos limitados a la expresividad del lenguaje
 - Ventaja: Los *framework* suelen incluir un *compilador* de *templates* que puede optimizar la detección de cambios para el repintado
@@ -238,10 +172,10 @@ En el ejemplo, solo puede cambiar el tercer `<p>`, así que **para repintar el c
 
 ---
 
-## Javascript para definir *templates*
+## Opción 2: JS para definir *templates*
 
-- En React: `React.createElement(<tag>, <atributos>, <hijos>)`
-- Luego veremos por qué no se usan directamente las funciones del DOM del mismo nombre. Por ahora podemos suponer que hacen lo mismo
+- En React podemos generar una etiqueta con la función `React.createElement(<tag>, <atributos>, <hijos>)`
+- Podemos generar HTML arbitrario combinando en JS varias llamadas a `createElement` 
 
 ```javascript
 //esto es como la "f" de vista=f(datos) 
@@ -262,7 +196,7 @@ ReactDOM.render(
 
 ---
 
-El ejemplo anterior puede parecer tedioso (¡y lo es!), pero usar JS para la función de *render* tiene la **ventaja** de que **podemos usar toda la expresividad de JS**
+Usar JS para la función de *render* tiene la **ventaja** de que **podemos usar toda la expresividad de JS** (control de flujo, funciones de la librería estándar, propias,...)
 
 ```javascript
 //Aclaración: nadie programa así en React, normalmente se usa un formato llamado JSX,
@@ -272,7 +206,7 @@ function Ejemplo(props) {
     const children = []
     for(var i=0; i<5; i++) {
         children.push(c('p', {class:'text'},
-                       i == 2 ? props.mensaje : 'Lorem ipsum'))
+                       i == 2 ? props.mensaje.toUpperCase() : 'Lorem ipsum'))
     }
     return c('div', {id:'content'}, children)
 }
@@ -284,13 +218,13 @@ ReactDOM.render(
 );
 ```
 
-[Probar ejemplo](https://jscomplete.com/playground/s357763)
+[Ejemplo online](https://jscomplete.com/playground/s357763) | [Ejemplo con sintaxis JSX](https://jscomplete.com/playground/s768783)
 
 ---
 
-**Problema**: el lenguaje es tan expresivo que el *framework* no puede analizar qué estamos haciendo y no puede optimizar tanto el proceso de repintado.
+**Problema**: el lenguaje es tan expresivo que el *framework* no puede analizar qué estamos haciendo y no puede optimizar el proceso de repintado.
 
-Como hemos visto en los ejemplos, el desarrollador lo programa como si se repintara todo el árbol (*como los gráficos de un juego que se repintan enteros n veces por segundo*) 
+Como hemos visto en los ejemplos, el desarrollador lo programa como si se repintara todo el árbol (*como los gráficos de un juego que se repintan enteros n veces por segundo*) ([ejemplo del reloj](https://codepen.io/ottocol/pen/QWWVWPa?editors=1010))
 
 ¿Cómo reducir entonces el coste del repintado?
 
@@ -306,7 +240,7 @@ Como hemos visto en los ejemplos, el desarrollador lo programa como si se repint
 
 ---
 
-[Ejemplo de reconciliation](https://codepen.io/ottocol/pen/QWWVWPa?editors=1010)
+[Ejemplo del reloj](https://codepen.io/ottocol/pen/QWWVWPa?editors=1010)
 
 Para verlo hay que abrir la consola de desarrolladores del navegador, ir a ver el código fuente en "tiempo real" (pestaña "Elements" en Chrome, "Inspector" en Firefox) y buscar el div con id="root". Pese a que en el código de la función de render se repinta el componente entero, en el navegador solo se está cambiando un nodo.
 
@@ -326,3 +260,4 @@ Para verlo hay que abrir la consola de desarrolladores del navegador, ir a ver e
 - 📺 [dotJS 2016 - Evan You - Reactivity in Frontend JavaScript Frameworks](https://www.youtube.com/watch?v=r4pNEdIt_l4)
 - 📺 [Evan You on Vue.js: Seeking the Balance in Framework Design | JSConf.Asia 2019](https://www.youtube.com/watch?v=ANtSWq-zI0s)
 - 📺 📄[Svelte 3: Rethinking reactivity](https://svelte.dev/blog/svelte-3-rethinking-reactivity)
+- Reactivity in Vue 3: How does it work? [video1](https://www.youtube.com/watch?v=NZfNS4sJ8CI) [video2](https://www.vuemastery.com/courses/vue-3-reactivity/proxy-and-reflect/) (para ver el vídeo 2 tenéis que registraros en el sitio web del curso de Vue) 
