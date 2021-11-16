@@ -8,8 +8,8 @@ El objetivo de esta práctica es desarrollar una web que sirva de cliente al API
  - Necesitaréis modificar el servidor **para que use CORS**, como hicimos en el servidor de la lista de la compra
  - En el proyecto cliente tenéis 3 opciones:
    
-     1. No usar ninguna herramienta adicional en el cliente, como hemos hecho esta semana en la práctica guiada
-     2. Usar *parcel*, como hicimos la semana pasada. En la documentación se explica [cómo usarlo en conjunto con Vue](https://parceljs.org/languages/vue/), y también con otros frameworks (tendríais 0.25 puntos adicionales por hacerlo así)
+     1. No usar ninguna herramienta adicional en el cliente, como hicimos la semana pasada en la introducción a Vue.
+     2. Usar *parcel*, como hicimos en la práctica de la lista de la compra de hace dos semanas. En la documentación se explica [cómo usarlo en conjunto con Vue](https://parceljs.org/languages/vue/), y también con otros frameworks (tendríais 0.25 puntos adicionales por hacerlo así)
      3. Usar [`vue-cli`](https://cli.vuejs.org/) y *single file components* (tendríais 0.5 puntos adicionales por hacerlo así). En otros frameworks hay herramientas equivalentes (por ejemplo en React está `create-react-app`)
 
 ## Requisitos mínimos
