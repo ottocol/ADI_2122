@@ -85,7 +85,7 @@ console.log(total)  //sigue siendo 5 😕
 
 sin embargo ya sabéis que Vue sí que lo es: [Ejemplo en JSBin](https://jsbin.com/nakomet/edit?html,js,output). Incluso podemos eliminar la parte de UI, y lo sigue siendo: [Ejemplo en JSBin](https://jsbin.com/nayojel/edit?html,js,output)
 
-
+---
 
 ## Cómo funciona la reactividad en Vue 3
 
@@ -107,7 +107,7 @@ En las "operaciones reactivas"
 
 - Se intercepta el *get* sobre las propiedades para guardar la operación asociada
 - Se intercepta el *set* sobre una propiedad para recalcular las operaciones asociadas
-)
+
 
 ```javascript
 var datos = {a1:2, a2:3}
