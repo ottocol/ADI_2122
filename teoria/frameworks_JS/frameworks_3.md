@@ -169,6 +169,8 @@ Aunque podríamos hacer muchas más diferencias hay *frameworks* que usan un len
 
 En el ejemplo, solo puede cambiar el tercer `<p>`, así que **para repintar el componente *como mucho* solo hace falta repintar ese `<p>`**
 
+[Ejemplo en Svelte](https://svelte.dev/repl/a17ccc68af7d44948dee4b68256766dc?version=3.44.1)
+
 
 ---
 
