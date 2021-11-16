@@ -39,7 +39,7 @@ En *frameworks* JS se suelen distinguir dos tipos de reactividad:
 
 - [Ejemplo de código "de juguete"](https://jsbin.com/cozigix/2/edit?html,js,console,output) 
   - Para probarlo escribir en la consola `setState({contador:0}`. A partir de ahí se puede usar el botón (que llama a `setState`) 
-- [Ejemplo con el framework React](https://codepen.io/darylw/pen/vzKQNp?editors=0010) (podéis ver que la idea es la misma)
+- [Ejemplo con el framework React](https://codepen.io/darylw/pen/vzKQNp?editors=0010) (podéis ver que la idea es la misma, aunque la forma "bendecida" en la actualidad es usando componentes funcionales y [*hooks*](https://es.reactjs.org/docs/hooks-state.html))
 
 
 ---
