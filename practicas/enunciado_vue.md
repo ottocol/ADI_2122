@@ -55,6 +55,6 @@ Cualquier otra funcionalidad que queráis añadir consultadla antes conmigo para
 
 ## Entrega
 
-El plazo de entrega concluye el lunes **13 de diciembre de 2021** a las 23:59 horas. La entrega se realizará como es habitual a través de Moodle. Entregad una carpeta comprimida con el proyecto de esta práctica y el del servidor (modificado para usar CORS) en dos subcarpetas, ya que ambos son necesarios para ejecutar la aplicación. 
+El plazo de entrega concluye el ~~lunes **13 de diciembre de 2021**~~ **miércoles 22 de diciembre de 2021** a las 23:59 horas. La entrega se realizará como es habitual a través de Moodle. Entregad una carpeta comprimida con el proyecto de esta práctica y el del servidor (modificado para usar CORS) en dos subcarpetas, ya que ambos son necesarios para ejecutar la aplicación. 
 
 Entregad también un LEEME.txt donde expliquéis brevemente las partes optativas que habéis hecho y cualquier detalle que consideréis necesario.
